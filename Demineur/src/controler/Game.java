@@ -10,5 +10,5 @@ package controler;
  * @author onyze
  */
 public class Game {
-    
+    //System.out.println("je t'avais prevenu vazi");
 }
