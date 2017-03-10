@@ -5,10 +5,97 @@
  */
 package model;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *
  * @author onyze
  */
 public class Grid {
-    
+
+    private int xSize;
+    private int ySize;
+    private Cell[][] grid;
+    private int nbBomb;
+
+    public Grid() {
+        this(10, 10, 20);
+    }
+
+    public Grid(int xSize, int ySize) {
+        this(xSize, ySize, 20);
+    }
+
+    public Grid(int xSize, int ySize, int bombPercent) {
+        this.xSize = xSize;
+        this.ySize = ySize;
+        this.nbBomb = this.xSize * this.ySize * bombPercent / 100;
+        this.grid = new Cell[this.xSize][this.ySize];
+        ArrayList<Cell> emptyCells = new ArrayList();
+        for (int i = 0; i < this.xSize; i++) {
+            for (int j = 0; j < this.ySize; j++) {
+                this.grid[i][j] = new Cell(i, j);
+                emptyCells.add(this.grid[i][j]);
+            }
+        }
+        while (nbBomb > 0) {
+            Random rand = new Random();
+            int nbRand = rand.nextInt(emptyCells.size());
+            Cell c = emptyCells.get(nbRand);
+            emptyCells.remove(c);
+            this.grid[c.getX()][c.getY()].setBomb();
+            ArrayList<Cell> neighbours = this.getNeighbour(c.getX(), c.getY());//new ArrayList();
+            neighbours.forEach((neighbour) -> {
+                neighbour.addRisk();
+            });
+            nbBomb--;
+        }
+    }
+
+    private ArrayList<Cell> getNeighbour(int x, int y) {
+        ArrayList<Cell> neighbours = new ArrayList();
+        for (int i = x - 1; i <= x + 1; i++) {
+            for (int j = y - 1; j <= y + 1; j++) {
+                if ((i >= 0) && (i < xSize) && (j >= 0) && (j < ySize)) {
+                    if ((i != x) || (j != y)) {
+                        neighbours.add(this.grid[i][j]);
+                    }
+                }
+            }
+        }
+        return neighbours;
+    }
+
+    @Override
+    public String toString() {
+        String gridDisplay = new String();
+        for (int i = 0; i < this.xSize; i++) {
+            for (int j = 0; j < this.ySize; j++) {
+                if (grid[i][j].isHidden()) {
+                    switch (grid[i][j].getRisk()) {
+                        case -1:
+                            gridDisplay += "X";
+                            break;
+                        case 0:
+                            gridDisplay += ".";
+                            break;
+                        default:
+                            gridDisplay += Integer.toString(grid[i][j].getRisk());
+                            break;
+                    }
+                } else {
+                    gridDisplay += "#";
+                }
+            }
+            gridDisplay += "\n";
+        }
+        return gridDisplay;
+    }
+
+    public static void main(String[] args) {
+        Grid g = new Grid(10, 20);
+        System.out.println(g);
+    }
+
 }
