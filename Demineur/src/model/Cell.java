@@ -11,7 +11,7 @@ package model;
  */
 public class Cell {
 
-    private final int risk;
+    private int risk;
     private final int x;
     private final int y;
     private boolean hidden, marked;
@@ -22,6 +22,10 @@ public class Cell {
         this.risk = 0;
         this.hidden = true;
         this.marked = false;
+    }
+
+    public void setBomb() {
+        this.risk = -1;
     }
 
     public int getRisk() {
@@ -39,9 +43,11 @@ public class Cell {
     public boolean isHidden() {
         return hidden;
     }
-    
-    public void addRisk(){
-        this.risk += 1;
+
+    public void addRisk() {
+        if (this.risk != -1) {
+            this.risk++;
+        }
     }
 
     public void setHidden(boolean hidden) {
@@ -51,5 +57,5 @@ public class Cell {
     public void setMarked(boolean marked) {
         this.marked = marked;
     }
-    
+
 }
