@@ -10,7 +10,10 @@ package model;
  * @author onyze
  */
 public class Cell {
-    private int risk, x, y;
+
+    private final int risk;
+    private final int x;
+    private final int y;
     private boolean hidden, marked;
 
     public Cell(int x, int y) {
