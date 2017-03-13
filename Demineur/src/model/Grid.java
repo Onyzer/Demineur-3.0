@@ -21,6 +21,7 @@ public class Grid extends Observable {
     private int nbBomb;
     public boolean lost;
     public boolean won;
+    private boolean first;
 
     public Grid() {
         this(10, 10, 20);
@@ -32,17 +33,30 @@ public class Grid extends Observable {
 
     public Grid(int xSize, int ySize, int bombPercent) {
         this.lost = false;
+        this.first = true;
         this.xSize = xSize;
         this.ySize = ySize;
         this.nbBomb = this.xSize * this.ySize * bombPercent / 100;
         this.grid = new Cell[this.xSize][this.ySize];
-        ArrayList<Cell> emptyCells = new ArrayList();
         for (int i = 0; i < this.xSize; i++) {
             for (int j = 0; j < this.ySize; j++) {
                 this.grid[i][j] = new Cell(i, j);
+            }
+        }
+    }
+
+    public void generateBomb(int x, int y) {
+        ArrayList<Cell> emptyCells = new ArrayList();
+        for (int i = 0; i < this.xSize; i++) {
+            for (int j = 0; j < this.ySize; j++) {
                 emptyCells.add(this.grid[i][j]);
             }
         }
+        ArrayList<Cell> n = getNeighbour(x, y);
+        n.forEach((neighbour) -> {
+            emptyCells.add(neighbour);
+        });
+        emptyCells.add(grid[x][y]);
         while (nbBomb > 0) {
             Random rand = new Random();
             int nbRand = rand.nextInt(emptyCells.size());
@@ -72,10 +86,14 @@ public class Grid extends Observable {
     }
 
     public void showCell(int x, int y) {
+        if(first){
+            generateBomb(x, y);
+            first = false;
+        }
         Cell c = grid[x][y];
         if (c.isHidden()) {
             c.setHidden(false);
-            if (c.isMarked()!=0) {
+            if (c.isMarked() != 0) {
                 System.out.println("u can't show a marked cell");
             } else {
                 switch (c.getRisk()) {
