@@ -14,20 +14,20 @@ import model.Grid;
  * @author onyze
  */
 public class consoleView implements Observer {
-    
+
     private Grid grille;
-    
+
     /**
      *
      * @param g
      */
-    public consoleView(Grid g){
+    public consoleView(Grid g) {
         this.grille = g;
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         System.out.println(this.grille.toString());
     }
-    
+
 }
