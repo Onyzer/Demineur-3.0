@@ -6,6 +6,8 @@
 package controler;
 
 import java.util.Scanner;
+import model.Grid;
+import view.consoleView;
 
 /**
  *
@@ -33,5 +35,8 @@ public class Game {
             
         }
         Grid grille = new Grid(xSize, ySize, bombs);
+        consoleView cons = new consoleView(grille);
+        grille.addObserver(cons);
+        
     }
 }
