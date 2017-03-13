@@ -6,13 +6,15 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Random;
+import view.consoleView;
 
 /**
  *
  * @author onyze
  */
-public class Grid {
+public class Grid extends Observable{
 
     private int xSize;
     private int ySize;
@@ -115,5 +117,6 @@ public class Grid {
         }
         return gridDisplay;
     }
+
 
 }
