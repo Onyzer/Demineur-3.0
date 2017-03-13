@@ -8,7 +8,6 @@ package model;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Random;
-import view.consoleView;
 
 /**
  *
@@ -97,6 +96,18 @@ public class Grid extends Observable {
                 }
             }
         }
+    }
+    
+    public void isWon(){
+        for (int i = 0; i < this.xSize; i++) {
+            for (int j = 0; j < this.ySize; j++) {
+                if((this.grid[i][j].isHidden())&&(this.grid[i][j].getRisk()!=-1)){
+                    won = false;
+                    return;
+                }
+            }
+        }
+        won = true;
     }
 
     public void show(int x, int y) {
