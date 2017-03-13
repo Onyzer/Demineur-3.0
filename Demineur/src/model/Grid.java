@@ -54,9 +54,9 @@ public class Grid extends Observable {
         }
         ArrayList<Cell> n = getNeighbour(x, y);
         n.forEach((neighbour) -> {
-            emptyCells.add(neighbour);
+            emptyCells.remove(neighbour);
         });
-        emptyCells.add(grid[x][y]);
+        emptyCells.remove(grid[x][y]);
         while (nbBomb > 0) {
             Random rand = new Random();
             int nbRand = rand.nextInt(emptyCells.size());
