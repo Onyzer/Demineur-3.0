@@ -57,5 +57,9 @@ public class Cell {
     public void setMarked(boolean marked) {
         this.marked = marked;
     }
+    
+    public boolean isMarked(){
+        return marked;
+    }
 
 }
