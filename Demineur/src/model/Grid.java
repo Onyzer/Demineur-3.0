@@ -67,6 +67,29 @@ public class Grid {
         return neighbours;
     }
 
+    public void showCell(int x, int y) {
+        Cell c = grid[x][y];
+        if (c.isHidden()) {
+            c.setHidden(false);
+            switch (c.getRisk()) {
+                case 0:
+                    ArrayList<Cell> neighbours = this.getNeighbour(c.getX(), c.getY());//new ArrayList();
+                    neighbours.forEach((Cell neighbour) -> {
+                        if (neighbour.isHidden()) {
+                            showCell(neighbour.getX(), neighbour.getY());
+                        }
+                    });
+                    break;
+                case -1:
+                    System.out.println("perdu");
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    }
+
     @Override
     public String toString() {
         String gridDisplay = new String();
@@ -91,11 +114,6 @@ public class Grid {
             gridDisplay += "\n";
         }
         return gridDisplay;
-    }
-
-    public static void main(String[] args) {
-        Grid g = new Grid(10, 20);
-        System.out.println(g);
     }
 
 }
