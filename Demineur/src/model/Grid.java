@@ -75,7 +75,7 @@ public class Grid extends Observable {
         Cell c = grid[x][y];
         if (c.isHidden()) {
             c.setHidden(false);
-            if (c.isMarked()) {
+            if (c.isMarked()!=0) {
                 System.out.println("u can't show a marked cell");
             } else {
                 switch (c.getRisk()) {
@@ -97,11 +97,11 @@ public class Grid extends Observable {
             }
         }
     }
-    
-    public void isWon(){
+
+    public void isWon() {
         for (int i = 0; i < this.xSize; i++) {
             for (int j = 0; j < this.ySize; j++) {
-                if((this.grid[i][j].isHidden())&&(this.grid[i][j].getRisk()!=-1)){
+                if ((this.grid[i][j].isHidden()) && (this.grid[i][j].getRisk() != -1)) {
                     won = false;
                     return;
                 }
@@ -111,17 +111,29 @@ public class Grid extends Observable {
     }
 
     public void show(int x, int y) {
-        showCell(x, y);
+        showCell(y, x);
         setChanged();
         notifyObservers();
     }
 
-    public void mark(int x, int y) {
+    public void markBomb(int x, int y) {
         Cell c = grid[x][y];
-        if (c.isMarked()) {
-            c.setMarked(false);
-        } else {
-            c.setMarked(true);
+        if (c.isMarked() != 1) {
+            c.setMarked(1);
+        }
+    }
+
+    public void markDoubt(int x, int y) {
+        Cell c = grid[x][y];
+        if (c.isMarked() != 2) {
+            c.setMarked(2);
+        }
+    }
+
+    public void unmark(int x, int y) {
+        Cell c = grid[x][y];
+        if (c.isMarked() != 0) {
+            c.setMarked(0);
         }
     }
 
@@ -143,7 +155,20 @@ public class Grid extends Observable {
                             break;
                     }
                 } else {
-                    gridDisplay += "#";
+                    switch (grid[i][j].isMarked()) {
+                        case 2:
+                            gridDisplay += "?";
+
+                            break;
+                        case 1:
+                            gridDisplay += "!";
+
+                            break;
+                        default:
+                            gridDisplay += "#";
+
+                            break;
+                    }
                 }
             }
             gridDisplay += "\n";

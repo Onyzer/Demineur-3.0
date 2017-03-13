@@ -14,14 +14,15 @@ public class Cell {
     private int risk;
     private final int x;
     private final int y;
-    private boolean hidden, marked;
+    private boolean hidden;
+    private int marked;
 
     public Cell(int x, int y) {
         this.x = x;
         this.y = y;
         this.risk = 0;
         this.hidden = true;
-        this.marked = false;
+        this.marked = 0;
     }
 
     public void setBomb() {
@@ -54,11 +55,11 @@ public class Cell {
         this.hidden = hidden;
     }
 
-    public void setMarked(boolean marked) {
+    public void setMarked(int marked) {
         this.marked = marked;
     }
     
-    public boolean isMarked(){
+    public int isMarked(){
         return marked;
     }
 
