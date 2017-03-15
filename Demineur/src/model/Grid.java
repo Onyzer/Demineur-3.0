@@ -129,7 +129,7 @@ public class Grid extends Observable {
     }
 
     public void show(int x, int y) {
-        showCell(y, x);
+        showCell(x, y);
         setChanged();
         notifyObservers();
     }
@@ -192,6 +192,18 @@ public class Grid extends Observable {
             gridDisplay += "\n";
         }
         return gridDisplay;
+    }
+
+    public int getxSize() {
+        return xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
+    
+    public Cell getCell(int x, int y){
+        return grid[x][y];
     }
 
 }

@@ -5,8 +5,11 @@
  */
 package controler;
 
+import java.awt.Component;
 import java.util.Scanner;
+import javax.swing.JFrame;
 import model.Grid;
+import view.GraphicalGridView;
 import view.consoleView;
 
 /**
@@ -73,6 +76,12 @@ public class Game {
                     break;
             }
         }
+
+        JFrame frame = new JFrame("Démineur");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 400);
+        frame.setVisible(true);
+        frame.add(new GraphicalGridView(grille));
 
     }
 }
