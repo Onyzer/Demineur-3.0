@@ -86,7 +86,7 @@ public class Grid extends Observable {
     }
 
     public void showCell(int x, int y) {
-        if(first){
+        if (first) {
             generateBomb(x, y);
             first = false;
         }
@@ -138,6 +138,9 @@ public class Grid extends Observable {
         Cell c = grid[x][y];
         if (c.isMarked() != 1) {
             c.setMarked(1);
+            c.setHidden(false);
+            setChanged();
+            notifyObservers();
         }
     }
 
@@ -145,6 +148,9 @@ public class Grid extends Observable {
         Cell c = grid[x][y];
         if (c.isMarked() != 2) {
             c.setMarked(2);
+            c.setHidden(false);
+            setChanged();
+            notifyObservers();
         }
     }
 
@@ -152,6 +158,9 @@ public class Grid extends Observable {
         Cell c = grid[x][y];
         if (c.isMarked() != 0) {
             c.setMarked(0);
+            c.setHidden(true);
+            setChanged();
+            notifyObservers();
         }
     }
 
@@ -160,11 +169,24 @@ public class Grid extends Observable {
         String gridDisplay = new String();
         for (int i = 0; i < this.xSize; i++) {
             for (int j = 0; j < this.ySize; j++) {
+                gridDisplay += " ";
                 if (!grid[i][j].isHidden()) {
                     switch (grid[i][j].getRisk()) {
                         case -1:
-                            gridDisplay += "X";
-                            break;
+                            switch (grid[i][j].isMarked()) {
+                                case 2:
+                                    gridDisplay += "?";
+
+                                    break;
+                                case 1:
+                                    gridDisplay += "!";
+
+                                    break;
+                                default:
+                                    gridDisplay += "X";
+
+                                    break;
+                            }
                         case 0:
                             gridDisplay += ".";
                             break;
@@ -173,23 +195,12 @@ public class Grid extends Observable {
                             break;
                     }
                 } else {
-                    switch (grid[i][j].isMarked()) {
-                        case 2:
-                            gridDisplay += "?";
-
-                            break;
-                        case 1:
-                            gridDisplay += "!";
-
-                            break;
-                        default:
-                            gridDisplay += "#";
-
-                            break;
-                    }
+                    gridDisplay += "#";
                 }
             }
             gridDisplay += "\n";
+            gridDisplay += "\n";
+
         }
         return gridDisplay;
     }
@@ -201,8 +212,8 @@ public class Grid extends Observable {
     public int getySize() {
         return ySize;
     }
-    
-    public Cell getCell(int x, int y){
+
+    public Cell getCell(int x, int y) {
         return grid[x][y];
     }
 

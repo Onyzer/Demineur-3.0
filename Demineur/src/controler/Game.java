@@ -67,7 +67,7 @@ public class Game {
                                 break;
                         }
 
-                        grille.show(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
+                        //grille.show(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
                     }
                     break;
                 case "q":

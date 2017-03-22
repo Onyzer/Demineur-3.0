@@ -7,6 +7,8 @@ package view;
 
 import java.awt.Component;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JPanel;
 import model.Grid;
 
@@ -24,10 +26,9 @@ public class GraphicalGridView extends JPanel {
 
         for (int i = 0; i < grille.getxSize(); i++) {
             for (int j = 0; j < grille.getySize(); j++) {
-                this.add(new GraphicalCellView(grille.getCell(i, j)));
+                GraphicalCellView gcv = new GraphicalCellView(grille.getCell(i, j));
+                this.add(gcv);
             }
         }
-
     }
-
 }
