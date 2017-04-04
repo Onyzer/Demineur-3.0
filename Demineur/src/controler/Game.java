@@ -5,7 +5,10 @@
  */
 package controler;
 
-import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Scanner;
 import javax.swing.JFrame;
 import model.Grid;
@@ -16,33 +19,18 @@ import view.consoleView;
  *
  * @author onyze
  */
-public class Game {
-
-    public static void main(String[] args) {
-        int xSize, ySize, bombs = 0;
-        String action;
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Bienvenue dans le super Démineur !");
-        //Récupération de la taille en X
-        System.out.println("Quelle sera le nombre de cellules en X ?");
-        xSize = Integer.parseInt(sc.nextLine());
-        System.out.println("Quelle sera le nombre de cellules en Y ?");
-        ySize = Integer.parseInt(sc.nextLine());
-        System.out.println("Quelle sera le pourcentage de bombes dans la grille ?");
-        while (bombs > 85 || bombs <= 0) {
-            try {
-                bombs = Integer.parseInt(sc.nextLine());
-                if (bombs > 85 || bombs <= 0) {
-                    throw new BombsException();
-                }
-            } catch (BombsException e) {
-            }
-
-        }
-        Grid grille = new Grid(xSize, ySize, bombs);
+public class Game{
+    private Grid grille;
+    
+    public Game(int xSize, int ySize, int bombs) {
+        this.grille = new Grid(xSize, ySize, bombs);
+    }
+    
+    public void playConsole(){
         consoleView cons = new consoleView(grille);
         grille.addObserver(cons);
-
+        Scanner sc = new Scanner(System.in);
+        String action;
         while (!grille.lost && !grille.won) {
             System.out.println("Qu'allez vous faire ?");
             action = sc.nextLine();
@@ -66,8 +54,6 @@ public class Game {
                                 grille.unmark(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
                                 break;
                         }
-
-                        //grille.show(Integer.parseInt(parts[1]), Integer.parseInt(parts[2]));
                     }
                     break;
                 case "q":
@@ -76,12 +62,16 @@ public class Game {
                     break;
             }
         }
+    }
+    
+    public void playGraphical() {
 
         JFrame frame = new JFrame("Démineur");
+        GraphicalGridView graph = new GraphicalGridView(grille);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(300, 400);
+        frame.add(graph);
+        grille.addObserver(graph);
         frame.setVisible(true);
-        frame.add(new GraphicalGridView(grille));
-
     }
 }

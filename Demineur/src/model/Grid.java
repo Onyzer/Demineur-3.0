@@ -132,6 +132,7 @@ public class Grid extends Observable {
         showCell(x, y);
         setChanged();
         notifyObservers();
+        System.out.println("show de :" + x + " " + y);
     }
 
     public void markBomb(int x, int y) {
@@ -141,6 +142,7 @@ public class Grid extends Observable {
             c.setHidden(false);
             setChanged();
             notifyObservers();
+            System.out.println("markbomb de :" + x + " " + y);
         }
     }
 
@@ -151,6 +153,7 @@ public class Grid extends Observable {
             c.setHidden(false);
             setChanged();
             notifyObservers();
+            System.out.println("markDoubt de :" + x + " " + y);
         }
     }
 
@@ -161,6 +164,7 @@ public class Grid extends Observable {
             c.setHidden(true);
             setChanged();
             notifyObservers();
+            System.out.println("unmark de :" + x + " " + y);
         }
     }
 
