@@ -65,7 +65,9 @@ public class Grid extends Observable {
             this.grid[c.getX()][c.getY()].setBomb();
             ArrayList<Cell> neighbours = this.getNeighbour(c.getX(), c.getY());//new ArrayList();
             neighbours.forEach((neighbour) -> {
-                neighbour.addRisk();
+                if (neighbour.getRisk() != -1) {
+                    neighbour.addRisk();
+                }
             });
             nbBomb--;
         }
@@ -166,6 +168,10 @@ public class Grid extends Observable {
             notifyObservers();
             System.out.println("unmark de :" + x + " " + y);
         }
+    }
+
+    public void setCell(Cell c, int i, int j) {
+        grid[i][j] = c;
     }
 
     @Override

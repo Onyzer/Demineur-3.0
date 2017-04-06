@@ -69,7 +69,7 @@ public class Game{
         JFrame frame = new JFrame("Démineur");
         GraphicalGridView graph = new GraphicalGridView(grille);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 400);
+        frame.setSize(500, 500);
         frame.add(graph);
         grille.addObserver(graph);
         frame.setVisible(true);
